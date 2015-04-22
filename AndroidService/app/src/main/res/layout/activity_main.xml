@@ -28,13 +28,13 @@
         android:layout_below="@+id/Add"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Start Service"
+        android:text="Start Music"
         android:onClick="startService"/>
     <Button
         android:id="@+id/stop"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/start"
-        android:text="Stop Service"
-        android:onClick="stopService"/>
+        android:text="Stop Music"
+        />
 </RelativeLayout>

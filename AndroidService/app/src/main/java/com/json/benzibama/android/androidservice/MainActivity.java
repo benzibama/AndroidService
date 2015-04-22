@@ -20,39 +20,48 @@ public class MainActivity extends ActionBarActivity {
     MyService mServer;
     EditText avalue,bvalue;
     Button startButton,StopButton,AddButton;
-    MyService service;
+    MyServer ms;
+    //MyService service1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        avalue=(EditText) findViewById(R.id.text1);
-        final Integer s1=Integer.parseInt(avalue.getText().toString());
-        bvalue=(EditText) findViewById(R.id.text2);
-        final Integer s2=Integer.parseInt(bvalue.getText().toString());
+
         AddButton=(Button) findViewById(R.id.Add);
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int cvalue=service.Add(s1,s2);
-                Toast.makeText(MainActivity.this,cvalue,Toast.LENGTH_LONG).show();
+                avalue=(EditText) findViewById(R.id.text1);
+                Integer s1=Integer.parseInt(avalue.getText().toString());
+                bvalue=(EditText) findViewById(R.id.text2);
+                Integer s2=Integer.parseInt(bvalue.getText().toString());
+                int cvalue=mServer.Add(s1,s2);
+                Toast.makeText(MainActivity.this,"The total value is "+cvalue,Toast.LENGTH_LONG).show();
             }
         });
-
+        StopButton=(Button) findViewById(R.id.stop);
+        StopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mServer.stopMP();
+            }
+        });
     }
 
 
 
     public void startService(View v){
-        startService(new Intent(getBaseContext(),MyService.class));
+        startService(new Intent(this,MyService.class));
     }
 
-    public void stopService(View v){
-        stopService(new Intent(getBaseContext(),MyService.class));
-    }
+    /*public void stopService(View v){
+        stopService(new Intent(this,MyService.class));
+    }*/
+
 
     @Override
+
     protected void onStart() {
         super.onStart();
         Intent intent=new Intent(MainActivity.this,MyService.class);
@@ -79,6 +88,9 @@ public class MainActivity extends ActionBarActivity {
             mServer=mLocalBinder.getServerInstance();
         }
     };
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
